@@ -73,5 +73,7 @@
 
 ### Orders
 
-**POST** /api/orders - Place an order for books
-**GET**/api/orders/revenue - Calculate total revenue from orders
+- POST
+  > /api/orders - Place an order for books
+- GET
+  > /api/orders/revenue - Calculate total revenue from orders
