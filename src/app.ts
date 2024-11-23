@@ -11,7 +11,7 @@ app.use(cors())
 
 // when client hit /api/books go to find exact route
 
-app.use('/api/books', StudentRoutes)
+app.use('/api/products', StudentRoutes)
 app.use('/api/orders', BookRoute)
 
 app.get('/', (req: Request, res: Response) => {

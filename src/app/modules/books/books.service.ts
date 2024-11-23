@@ -26,24 +26,27 @@ export const getSingleBook = async (id: string) => {
 // update single book from database when data updated successfully updated time automated saved
 
 const updateBook = async (
-  _id: string,
+  productId: string,
   data: typeof Books,
 ): Promise<IBooks | null> => {
   const options = { new: true, runValidators: true }
-  const result = await Books.findByIdAndUpdate(_id, data, options)
+  const result = await Books.findByIdAndUpdate(productId, data, options)
   return result
 }
 // delete book
-const deleteBook = async (_id: string) => {
-  const result = await Books.findByIdAndDelete(_id)
+const deleteBook = async (productId: string) => {
+  const result = await Books.findByIdAndDelete(productId)
   return result
 }
 
 // Update book stock
 
-export const updatedBookQuantity = async (bookId: string, quantity: number) => {
+export const updatedBookQuantity = async (
+  productId: string,
+  quantity: number,
+) => {
   try {
-    const book = await Books.findById(bookId)
+    const book = await Books.findById(productId)
     if (!book) {
       throw new Error('Book not found')
     }

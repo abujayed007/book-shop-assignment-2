@@ -53,8 +53,8 @@ const getAllBooks = async (req: Request, res: Response) => {
 
 const getSingleBook = async (req: Request, res: Response) => {
   try {
-    const { bookId } = req.params
-    const result = await BookServices.getSingleBook(bookId)
+    const { productId } = req.params
+    const result = await BookServices.getSingleBook(productId)
     res.status(200).json({
       message: 'Book retrieved successfully',
       success: true,
@@ -77,9 +77,9 @@ const getSingleBook = async (req: Request, res: Response) => {
 
 const updateBook = async (req: Request, res: Response) => {
   try {
-    const { bookId } = req.params
+    const { productId } = req.params
     const updateBook = req.body
-    const result = await BookServices.updateBook(bookId, updateBook)
+    const result = await BookServices.updateBook(productId, updateBook)
     res.status(200).json({
       message: 'Book updated successfully',
       success: true,
@@ -102,8 +102,8 @@ const updateBook = async (req: Request, res: Response) => {
 
 const deleteBook = async (req: Request, res: Response) => {
   try {
-    const { bookId } = req.params
-    const result = await BookServices.deleteBook(bookId)
+    const { productId } = req.params
+    const result = await BookServices.deleteBook(productId)
     res.status(200).json({
       message: 'Book deleted successfully',
       success: true,

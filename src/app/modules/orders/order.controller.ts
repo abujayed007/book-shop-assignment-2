@@ -33,7 +33,7 @@ const getRevenue = async (req: Request, res: Response) => {
     })
   } catch (error) {
     if (error instanceof Error) {
-      res.status(500).json({
+      res.status(404).json({
         message: error.message,
       })
     }
