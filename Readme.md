@@ -41,23 +41,21 @@
 ### Setup Instructions
 
 1. Clone the Repository
-   git clone <repository-url>
-   cd e-commerce-api
+   > git clone <repository-url>
+   > cd e-commerce-api
 2. Install Dependencies
 
-- Run the following command to install required packages:
-  npm install
+   > npm install
 
 3. Environment Configuration
 
 - Create a .env file in the project root with the following keys:
-  PORT=5000
-  MONGO_URI=mongodb://localhost:27017/ecommerce
+  > PORT=5000
+  > MONGO_URI=mongodb://localhost:27017/ecommerce
 
 4. Start the Server
 
-- Launch the application with:
-  npm start
+   > npm start
 
 5. Test the API
 
@@ -67,13 +65,13 @@
 
 ### Books
 
-**POST** /api/products - Create a new book.
-**GET** /api/products - Retrieve all books or search by a term.
-**GET** /api/products/:productId - Get details of a specific book.
-**PUT** /api/products/:productId - Update book details.
-**DELETE** /api/products/:productId - Delete a book.
+**POST** /api/products - Create a new book
+**GET** /api/products - Retrieve all books or search by a term
+**GET** /api/products/:productId - Get details of a specific book
+**PUT** /api/products/:productId - Update book details
+**DELETE** /api/products/:productId - Delete a book
 
 ### Orders
 
-**POST** /api/orders - Place an order for books.
+**POST** /api/orders - Place an order for books
 **GET**/api/orders/revenue - Calculate total revenue from orders
