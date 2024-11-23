@@ -1,28 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Books = void 0;
 const mongoose_1 = require("mongoose");
-// Create a books schema generic with IBook Interface
-const booksSchema = new mongoose_1.Schema({
-    title: {
-        type: String,
-        unique: true,
-        required: true,
-        maxlength: 50,
-    },
-    author: {
+const orderSchema = new mongoose_1.Schema({
+    email: {
         type: String,
         required: true,
     },
-    price: {
-        type: Number,
-        required: true,
-    },
-    category: {
-        type: String,
-        required: true,
-    },
-    description: {
+    product: {
         type: String,
         required: true,
     },
@@ -30,8 +14,8 @@ const booksSchema = new mongoose_1.Schema({
         type: Number,
         required: true,
     },
-    inStock: {
-        type: Boolean,
+    totalPrice: {
+        type: Number,
         required: true,
     },
     createdAt: {
@@ -43,5 +27,5 @@ const booksSchema = new mongoose_1.Schema({
         default: new Date().toISOString(),
     },
 }, { timestamps: true });
-// Create a model
-exports.Books = (0, mongoose_1.model)('Books', booksSchema);
+const Order = (0, mongoose_1.model)('Order', orderSchema);
+exports.default = Order;

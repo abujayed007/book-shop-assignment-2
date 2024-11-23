@@ -28,6 +28,7 @@ const createBooks = async (req: Request, res: Response) => {
 }
 
 // Handle get all books request and send response
+
 const getAllBooks = async (req: Request, res: Response) => {
   try {
     const result = await BookServices.getAllBooksFromDB()
@@ -50,6 +51,8 @@ const getAllBooks = async (req: Request, res: Response) => {
     }
   }
 }
+
+// Handle find single product by id
 
 const getSingleBook = async (req: Request, res: Response) => {
   try {
@@ -74,6 +77,8 @@ const getSingleBook = async (req: Request, res: Response) => {
     }
   }
 }
+
+// Handle update properties value
 
 const updateBook = async (req: Request, res: Response) => {
   try {
@@ -100,6 +105,8 @@ const updateBook = async (req: Request, res: Response) => {
   }
 }
 
+// Handle request for deleting book
+
 const deleteBook = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params
@@ -123,6 +130,9 @@ const deleteBook = async (req: Request, res: Response) => {
     }
   }
 }
+
+// Handle update product quantity after order placed
+
 const updatedBookQuantity = async (req: Request, res: Response) => {
   try {
     const { bookId } = req.params

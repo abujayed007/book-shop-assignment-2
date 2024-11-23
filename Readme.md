@@ -1,3 +1,5 @@
+[Server Link](https://assaignment-2-book-store.vercel.app/)
+
 # Project Overview
 
 **This is a e-commerce api restful application design managing book in online store.It supports operations such as creating, retrieving, updating, and deleting books, placing orders, managing inventory, and calculating total revenue. Built with Node.js, Express.js, and MongoDB, it is scalable, efficient, and adheres to industry-standard practices.**

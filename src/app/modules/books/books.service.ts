@@ -19,7 +19,7 @@ const getAllBooksFromDB = async () => {
 
 export const getSingleBook = async (id: string) => {
   const result = await Books.findById(id)
-  console.log(result)
+  // console.log(result)
   return result
 }
 

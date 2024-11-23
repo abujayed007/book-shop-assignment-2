@@ -2,6 +2,7 @@ import { OrderServices } from './order.service'
 import { updatedBookQuantity } from './../books/books.service'
 import { Request, Response } from 'express'
 
+// handle create order
 const orderPlace = async (req: Request, res: Response) => {
   try {
     const newOrder = req.body
@@ -22,7 +23,7 @@ const orderPlace = async (req: Request, res: Response) => {
     }
   }
 }
-
+// Handle request of calculate revenue
 const getRevenue = async (req: Request, res: Response) => {
   try {
     const totalRevenue = await OrderServices.calculateRevenue()

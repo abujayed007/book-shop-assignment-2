@@ -7,7 +7,10 @@ exports.StudentRoutes = void 0;
 const express_1 = __importDefault(require("express"));
 const books_controller_1 = require("./books.controller");
 const router = express_1.default.Router();
-// Client found post route for create book item
-router.post('/create-book', books_controller_1.BooksController.createBooks);
+router.post('/create-product', books_controller_1.BooksController.createBooks);
+router.get('/:productId', books_controller_1.BooksController.getSingleBook);
+router.put('/:productId', books_controller_1.BooksController.updateBook);
+router.put('/:productId', books_controller_1.BooksController.updatedBookQuantity);
+router.delete('/:productId', books_controller_1.BooksController.deleteBook);
 router.get('/', books_controller_1.BooksController.getAllBooks);
 exports.StudentRoutes = router;

@@ -3,8 +3,6 @@ import { BooksController } from './books.controller'
 
 const router = express.Router()
 
-// Client found post route for create book item
-
 router.post('/create-product', BooksController.createBooks)
 router.get('/:productId', BooksController.getSingleBook)
 router.put('/:productId', BooksController.updateBook)

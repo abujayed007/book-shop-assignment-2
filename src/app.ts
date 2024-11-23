@@ -6,11 +6,11 @@ import { BookRoute } from './app/modules/orders/order.route'
 
 const app: Application = express()
 
+// middleware
 app.use(express.json())
 app.use(cors())
 
-// when client hit /api/books go to find exact route
-
+// create api
 app.use('/api/products', StudentRoutes)
 app.use('/api/orders', BookRoute)
 
