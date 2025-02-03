@@ -1,47 +1,65 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import httpStatus from 'http-status'
 import { OrderServices } from './order.service'
 import { updatedBookQuantity } from './../books/books.service'
-import { Request, Response } from 'express'
+import sendResponse from '../../utils/sendResponse'
+import catchAsync from '../../utils/catchAsync'
+import { AuthenticatedRequest } from '../../../middleware/auth'
 
 // handle create order
-const orderPlace = async (req: Request, res: Response) => {
-  try {
-    const newOrder = req.body
-    const { product, quantity } = req.body
-    const order = await OrderServices.createOrders(newOrder)
-    const update = await updatedBookQuantity(product, quantity)
+const orderPlace = catchAsync(async (req: AuthenticatedRequest, res) => {
+  const newOrder = req.body
+  const { product, quantity } = req.body
+  const order = await OrderServices.createOrders(newOrder)
+  const update = await updatedBookQuantity(product, quantity)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books ordered successfully',
+    data: order,
+  })
+})
 
-    res.status(200).json({
-      message: 'Order placed successfully',
-      order,
-      update,
-    })
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        message: error.message,
-      })
-    }
-  }
-}
+const getAllOrder = catchAsync(async (req, res) => {
+  const result = await OrderServices.getAllOrderFromDB(req.body)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Order retrived  successfully',
+    data: result,
+  })
+})
+
 // Handle request of calculate revenue
-const getRevenue = async (req: Request, res: Response) => {
-  try {
-    const totalRevenue = await OrderServices.calculateRevenue()
-    res.status(200).json({
-      message: 'Revenue calculated successfully',
-      status: true,
-      data: totalRevenue,
-    })
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(404).json({
-        message: error.message,
-      })
-    }
-  }
-}
+const getRevenue = catchAsync(async (req, res) => {
+  const totalRevenues = await OrderServices.calculateRevenue()
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: 'Books ordered successfully',
+    data: totalRevenues,
+  })
+})
+
+const getOrderByUser = catchAsync(async (req, res) => {
+  const { email } = req.params
+
+  const result = await OrderServices.getOrderByUser(email)
+
+  // console.log(result)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Ordered retrived successfully',
+    data: result,
+  })
+})
 
 export const OrderController = {
   orderPlace,
   getRevenue,
+  getAllOrder,
+  getOrderByUser,
 }

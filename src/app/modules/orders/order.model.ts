@@ -1,4 +1,4 @@
-import { model, Schema } from 'mongoose'
+import mongoose, { model, Schema } from 'mongoose'
 import { IOrder } from './order.interface'
 
 const orderSchema = new Schema<IOrder>(
@@ -7,9 +7,13 @@ const orderSchema = new Schema<IOrder>(
       type: String,
       required: true,
     },
+    user: {
+      userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    },
     product: {
       type: String,
       required: true,
+      ref: 'Books',
     },
     quantity: {
       type: Number,
@@ -18,14 +22,6 @@ const orderSchema = new Schema<IOrder>(
     totalPrice: {
       type: Number,
       required: true,
-    },
-    createdAt: {
-      type: String,
-      default: new Date().toISOString(),
-    },
-    updatedAt: {
-      type: String,
-      default: new Date().toISOString(),
     },
   },
   { timestamps: true },

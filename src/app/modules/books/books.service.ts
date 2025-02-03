@@ -1,5 +1,10 @@
+import httpStatus from 'http-status'
+import { AppError } from '../../error/AppError'
 import { IBooks } from './books.interface'
 import { Books } from './books.model'
+
+import { booksSearchableFields } from './books.constant'
+import QueryBuilder from '../../builder/QueryBuilder'
 
 // Client create book into database before send data check Books model
 
@@ -10,9 +15,12 @@ const createBookFromDB = async (book: IBooks): Promise<IBooks> => {
 
 // Get all books from database
 
-const getAllBooksFromDB = async () => {
-  const result = await Books.find()
-  return result
+const getAllBooksFromDB = async (payload: Record<string, unknown>) => {
+  const bookQuery = new QueryBuilder(Books.find(), payload)
+    .search(booksSearchableFields)
+    .filter()
+  const books = await bookQuery.modelQuery
+  return books
 }
 
 // Get single book from database
@@ -48,10 +56,10 @@ export const updatedBookQuantity = async (
   try {
     const book = await Books.findById(productId)
     if (!book) {
-      throw new Error('Book not found')
+      throw new AppError(httpStatus.NOT_FOUND, 'Book not found')
     }
     if (book.quantity < quantity) {
-      throw new Error('Insufficient stock')
+      throw new AppError(httpStatus.INSUFFICIENT_STORAGE, 'Insufficient stock')
     }
     book.quantity -= quantity
     book.inStock = book.quantity < 0

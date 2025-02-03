@@ -1,162 +1,92 @@
-import { Request, Response } from 'express'
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable no-unused-vars */
+import httpStatus from 'http-status'
 import { BookServices } from './books.service'
+import catchAsync from '../../utils/catchAsync'
+import sendResponse from '../../utils/sendResponse'
+import { AuthenticatedRequest } from '../../../middleware/auth'
 
 // Handle create request for create book item and send response
 
-const createBooks = async (req: Request, res: Response) => {
-  try {
-    const book = req.body
-    const result = await BookServices.createBookFromDB(book)
-    res.status(200).json({
-      message: 'Book created successfully',
-      success: true,
-      data: result,
-    })
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        message: 'An error occurred',
-        success: false,
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-        stack: error.stack,
-      })
-    }
-  }
-}
+const createBooks = catchAsync(async (req, res) => {
+  const result = await BookServices.createBookFromDB(req.body)
+
+  sendResponse(res, {
+    statusCode: httpStatus.CREATED,
+    success: true,
+    message: 'Books created successfully',
+    data: result,
+  })
+})
 
 // Handle get all books request and send response
 
-const getAllBooks = async (req: Request, res: Response) => {
-  try {
-    const result = await BookServices.getAllBooksFromDB()
-    res.status(200).json({
-      message: 'Books retrieved successfully',
-      success: true,
-      data: result,
-    })
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        message: 'An error occurred',
-        success: false,
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-        stack: error.stack,
-      })
-    }
-  }
-}
+const getAllBooks = catchAsync(async (req: AuthenticatedRequest, res) => {
+  console.log(req.cookies)
+  console.log(req.user)
+  const result = await BookServices.getAllBooksFromDB(req.body)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books retrived successfully',
+    data: result,
+  })
+})
 
 // Handle find single product by id
 
-const getSingleBook = async (req: Request, res: Response) => {
-  try {
-    const { productId } = req.params
-    const result = await BookServices.getSingleBook(productId)
-    res.status(200).json({
-      message: 'Book retrieved successfully',
-      success: true,
-      data: result,
-    })
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        message: 'An error occurred',
-        success: false,
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-        stack: error.stack,
-      })
-    }
-  }
-}
+const getSingleBook = catchAsync(async (req, res) => {
+  const { productId } = req.params
+  const result = await BookServices.getSingleBook(productId)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Book retrived successfully',
+    data: result,
+  })
+})
 
 // Handle update properties value
 
-const updateBook = async (req: Request, res: Response) => {
-  try {
-    const { productId } = req.params
-    const updateBook = req.body
-    const result = await BookServices.updateBook(productId, updateBook)
-    res.status(200).json({
-      message: 'Book updated successfully',
-      success: true,
-      data: result,
-    })
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        message: 'An error occurred',
-        success: false,
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-        stack: error.stack,
-      })
-    }
-  }
-}
+const updateBook = catchAsync(async (req, res) => {
+  const { productId } = req.params
+  const updateBook = req.body
+  const result = await BookServices.updateBook(productId, updateBook)
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books updated successfully',
+    data: result,
+  })
+})
 
 // Handle request for deleting book
 
-const deleteBook = async (req: Request, res: Response) => {
-  try {
-    const { productId } = req.params
-    const result = await BookServices.deleteBook(productId)
-    res.status(200).json({
-      message: 'Book deleted successfully',
-      success: true,
-      data: result,
-    })
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        message: 'An error occurred',
-        success: false,
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-        stack: error.stack,
-      })
-    }
-  }
-}
+const deleteBook = catchAsync(async (req, res) => {
+  const { productId } = req.params
+  const result = await BookServices.deleteBook(productId)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books deleted successfully',
+  })
+})
 
 // Handle update product quantity after order placed
 
-const updatedBookQuantity = async (req: Request, res: Response) => {
-  try {
-    const { bookId } = req.params
-    const updateBook = req.body
-    const result = await BookServices.updateBook(bookId, updateBook)
-    res.status(200).json({
-      message: 'Book updated successfully',
-      success: true,
-      data: result,
-    })
-  } catch (error) {
-    if (error instanceof Error) {
-      res.status(500).json({
-        message: 'An error occurred',
-        success: false,
-        error: {
-          name: error.name,
-          message: error.message,
-        },
-        stack: error.stack,
-      })
-    }
-  }
-}
+const updatedBookQuantity = catchAsync(async (req, res) => {
+  const { bookId } = req.params
+  const updateBook = req.body
+  const result = await BookServices.updateBook(bookId, updateBook)
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Books quantity updated successfully',
+  })
+})
 
 export const BooksController = {
   createBooks,
