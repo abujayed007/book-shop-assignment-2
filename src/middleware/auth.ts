@@ -10,7 +10,6 @@ import { User } from '../app/modules/user/user.model'
 export interface AuthenticatedRequest extends Request {
   user?: JwtPayload
 }
-
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(
     async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
@@ -20,12 +19,20 @@ const auth = (...requiredRoles: TUserRole[]) => {
         throw new AppError(httpStatus.UNAUTHORIZED, 'Unauthorized user')
       }
 
-      const decoded = jwt.verify(
-        token,
-        config.jwt_access_secret as string,
-      ) as JwtPayload
+      let decoded
+      try {
+        decoded = jwt.verify(
+          token,
+          config.jwt_access_secret as string,
+        ) as JwtPayload
+      } catch (err) {
+        if (err) {
+          throw new AppError(httpStatus.UNAUTHORIZED, 'Unauthorized')
+        }
+      }
+      // console.log(decoded)
 
-      const { email, role } = decoded
+      const { email, role } = decoded as JwtPayload
 
       const user = await User.isUserExists(email)
 

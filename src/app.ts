@@ -10,16 +10,15 @@ const app: Application = express()
 
 // middleware
 app.use(express.json())
-app.use(cors())
 app.use(cookieParser())
-app.use(cors({ origin: ['http://localhost:5173'] }))
+app.use(cors({ origin: 'http://localhost:5173', credentials: true }))
 // create api
 app.use('/api', router)
 
 app.use(globalErrorHandler)
 app.use(notFound)
 
-app.get('/', (req: Request, res: Response) => {
+app.get('/api', (req: Request, res: Response) => {
   res.json({
     success: true,
     message: 'Server On',

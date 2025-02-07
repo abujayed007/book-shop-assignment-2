@@ -4,7 +4,6 @@ import httpStatus from 'http-status'
 import { BookServices } from './books.service'
 import catchAsync from '../../utils/catchAsync'
 import sendResponse from '../../utils/sendResponse'
-import { AuthenticatedRequest } from '../../../middleware/auth'
 
 // Handle create request for create book item and send response
 
@@ -21,9 +20,7 @@ const createBooks = catchAsync(async (req, res) => {
 
 // Handle get all books request and send response
 
-const getAllBooks = catchAsync(async (req: AuthenticatedRequest, res) => {
-  console.log(req.cookies)
-  console.log(req.user)
+const getAllBooks = catchAsync(async (req, res) => {
   const result = await BookServices.getAllBooksFromDB(req.body)
 
   sendResponse(res, {

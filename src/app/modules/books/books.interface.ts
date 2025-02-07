@@ -1,5 +1,3 @@
-import { Date } from 'mongoose'
-
 // create a interface for Books
 export interface IBooks {
   title: string
@@ -9,6 +7,5 @@ export interface IBooks {
   description: string
   quantity: number
   inStock: boolean
-  createdAt?: Date
-  updatedAt?: Date
+  image: string
 }

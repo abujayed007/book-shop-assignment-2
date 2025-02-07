@@ -8,50 +8,64 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OrderController = void 0;
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+const http_status_1 = __importDefault(require("http-status"));
 const order_service_1 = require("./order.service");
 const books_service_1 = require("./../books/books.service");
+const sendResponse_1 = __importDefault(require("../../utils/sendResponse"));
+const catchAsync_1 = __importDefault(require("../../utils/catchAsync"));
 // handle create order
-const orderPlace = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const newOrder = req.body;
-        const { product, quantity } = req.body;
-        const order = yield order_service_1.OrderServices.createOrders(newOrder);
-        const update = yield (0, books_service_1.updatedBookQuantity)(product, quantity);
-        res.status(200).json({
-            message: 'Order placed successfully',
-            order,
-            update,
-        });
-    }
-    catch (error) {
-        if (error instanceof Error) {
-            res.status(500).json({
-                message: error.message,
-            });
-        }
-    }
-});
+const orderPlace = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const newOrder = req.body;
+    const { product, quantity } = req.body;
+    const order = yield order_service_1.OrderServices.createOrders(newOrder);
+    const update = yield (0, books_service_1.updatedBookQuantity)(product, quantity);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Books ordered successfully',
+        data: order,
+    });
+}));
+const getAllOrder = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const result = yield order_service_1.OrderServices.getAllOrderFromDB(req.body);
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Order retrived  successfully',
+        data: result,
+    });
+}));
 // Handle request of calculate revenue
-const getRevenue = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const totalRevenue = yield order_service_1.OrderServices.calculateRevenue();
-        res.status(200).json({
-            message: 'Revenue calculated successfully',
-            status: true,
-            data: totalRevenue,
-        });
-    }
-    catch (error) {
-        if (error instanceof Error) {
-            res.status(404).json({
-                message: error.message,
-            });
-        }
-    }
-});
+const getRevenue = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const totalRevenues = yield order_service_1.OrderServices.calculateRevenue();
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.CREATED,
+        success: true,
+        message: 'Books ordered successfully',
+        data: totalRevenues,
+    });
+}));
+const getOrderByUser = (0, catchAsync_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { email } = req.params;
+    const result = yield order_service_1.OrderServices.getOrderByUser(email);
+    // console.log(result)
+    (0, sendResponse_1.default)(res, {
+        statusCode: http_status_1.default.OK,
+        success: true,
+        message: 'Ordered retrived successfully',
+        data: result,
+    });
+}));
 exports.OrderController = {
     orderPlace,
     getRevenue,
+    getAllOrder,
+    getOrderByUser,
 };

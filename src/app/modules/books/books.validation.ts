@@ -18,6 +18,7 @@ const createBooksValidationSchema = z.object({
       .int('Quantity must be an integer')
       .nonnegative('Quantity cannot be negative'), // Ensures non-negative values
     inStock: z.boolean(), // Boolean validation
+    image: z.string({ required_error: 'Image is required' }),
   }),
 })
 
@@ -39,6 +40,7 @@ const updateBooksValidationSchema = z.object({
       .int('Quantity must be an integer')
       .nonnegative('Quantity cannot be negative'), // Ensures non-negative values
     inStock: z.boolean(), // Boolean validation
+    image: z.string({ required_error: 'Image is required' }).optional(),
   }),
 })
 

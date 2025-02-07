@@ -8,7 +8,7 @@ import catchAsync from '../../utils/catchAsync'
 import { AuthenticatedRequest } from '../../../middleware/auth'
 
 // handle create order
-const orderPlace = catchAsync(async (req: AuthenticatedRequest, res) => {
+const orderPlace = catchAsync(async (req, res) => {
   const newOrder = req.body
   const { product, quantity } = req.body
   const order = await OrderServices.createOrders(newOrder)
@@ -21,7 +21,7 @@ const orderPlace = catchAsync(async (req: AuthenticatedRequest, res) => {
   })
 })
 
-const getAllOrder = catchAsync(async (req, res) => {
+const getAllOrder = catchAsync(async (req: AuthenticatedRequest, res) => {
   const result = await OrderServices.getAllOrderFromDB(req.body)
   sendResponse(res, {
     statusCode: httpStatus.OK,

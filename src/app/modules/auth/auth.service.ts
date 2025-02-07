@@ -5,6 +5,7 @@ import { TLoginUser } from './auth.interface'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import config from '../../config'
 import bcrypt from 'bcrypt'
+import { verifyToken } from './auth.utils'
 
 const loginUser = async (payload: TLoginUser) => {
   const user = await User.isUserExists(payload?.email)
@@ -28,7 +29,7 @@ const loginUser = async (payload: TLoginUser) => {
   }
 
   const accessToken = jwt.sign(jwtPayload, config.jwt_access_secret as string, {
-    expiresIn: '7d',
+    expiresIn: '1d',
   })
 
   const refreshToken = jwt.sign(
@@ -86,10 +87,7 @@ const changePassword = async (
 }
 
 const refreshToken = async (token: string) => {
-  const decoded = jwt.verify(
-    token,
-    config.jwt_refresh_secret as string,
-  ) as JwtPayload
+  const decoded = verifyToken(token, config.jwt_refresh_secret as string)
 
   const { email } = decoded
 

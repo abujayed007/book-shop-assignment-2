@@ -35,13 +35,9 @@ const booksSchema = new Schema<IBooks>(
       type: Boolean,
       required: true,
     },
-    createdAt: {
+    image: {
       type: String,
-      default: new Date().toISOString(),
-    },
-    updatedAt: {
-      type: String,
-      default: new Date().toISOString(),
+      required: true,
     },
   },
   { timestamps: true },
